@@ -7,20 +7,19 @@ import { Component, Input } from '@angular/core';
 })
 export class StartDateIconComponent {
 
-    public colorState: string = "green";
     @Input() public date: Date;
-    private _previousDate: Date;
+    private previousDate: Date;
 
   constructor() { }
 
    ngDoCheck() {
-        if(this.date != this._previousDate) {
-            this.handleStartDateColor();
-            this._previousDate = this.date;
+        if(this.date != this.previousDate) {
+            this.startDateHandler();
+            this.previousDate = this.date;
         }
     }
 
-  handleStartDateColor(): string {
+  startDateHandler(): string {
       let currentDate = new Date();
       let readDate = new Date(this.date); 
       let daysDiff = Math.ceil((readDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
