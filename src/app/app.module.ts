@@ -1,20 +1,81 @@
+import { StartDateIconComponent } from './share/start-date/start-date.component';
+import { TeachersService } from './core/teachers.service';
+import { CoursesService } from './core/courses.service';
+
+import { TeachersComponent } from './teachers/teachers.component';
+import { CoursesComponent } from './courses/courses.component';
+import { HomeComponent } from './home/home.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { RouterModule} from '@angular/router';
+import { NavTabComponent } from './share/nav-tab/nav-tab.component';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { TeacherDetailComponent } from './teacher-detail/teacher-detail.component';
+import {DataTableModule} from "angular2-datatable";
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    CoursesComponent,
+    TeachersComponent,
+    NavTabComponent,
+    CourseDetailComponent,
+    TeacherDetailComponent,
+    StartDateIconComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    DataTableModule,
+    RouterModule.forRoot([
+    {
+        path: 'teachers/:id',
+        component: TeacherDetailComponent
+      },
+      {
+        path: 'teachers/add',
+        component: TeacherDetailComponent
+      },
+      {
+        path: 'courses/:id',
+        component: CourseDetailComponent
+      },
+      {
+        path: 'courses/add',
+        component: CourseDetailComponent
+      },{
+        path: 'teachers',
+        component: TeachersComponent
+      },
+      {
+        path: 'courses',
+        component: CoursesComponent
+      },
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: '**',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      }
+    ]),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CoursesService,TeachersService],
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
