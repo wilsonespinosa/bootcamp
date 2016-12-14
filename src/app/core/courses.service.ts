@@ -1,5 +1,6 @@
+import { CoursesObj } from './coursesObj';
 import { TeachersService } from './teachers.service';
-import { CoursesObj } from './../coursesObj';
+
 import { MyActionsInterface } from './my-actions-interface';
 import { Injectable } from '@angular/core';
 
@@ -10,9 +11,9 @@ export class CoursesService implements MyActionsInterface{
 coursesObjList :CoursesObj[]=  [
      new CoursesObj(1,"Angular2","32","2017-01-01", "1"),
      new CoursesObj(2,"Ionic","20","2016-12-01", "2"),
-     new CoursesObj(3,"Test Automation","30","2016-15-05", "3"),
+     new CoursesObj(3,"Test Automation","30","2016-05-15", "3"),
      new CoursesObj(4,"Machine Learning","45","2017-05-01", "4"),
-     new CoursesObj(5,"Test Automation","30","2016-15-05", "5"),
+     new CoursesObj(5,"Test Automation","30","2016-05-15", "5"),
      new CoursesObj(6,"Machine Learning","45","2017-05-01", "6")
    ] 
     createRecord(coursesObj: CoursesObj){
@@ -32,7 +33,6 @@ coursesObjList :CoursesObj[]=  [
       this.coursesObjList.splice(index, 1);
     }
     getRecordById(id: string):CoursesObj{
-      console.log("ID "+id);
       return this.coursesObjList.find(value => value.id === +id);
    }
 

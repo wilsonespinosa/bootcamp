@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'date-icon',
-  template: `<span [style.color]="handleStartDateColor()" class="glyphicon glyphicon-record"></span>`,
+  template: `<span [style.color]="startDateHandler()" class="glyphicon glyphicon-certificate"></span>`,
   styleUrls: ['./start-date.component.css']
 })
 export class StartDateIconComponent {

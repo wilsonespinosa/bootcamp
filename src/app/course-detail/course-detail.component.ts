@@ -1,6 +1,7 @@
+import { TeachersObj } from './../core/teachersObj';
+import { CoursesObj } from './../core/coursesObj';
 import { CoursesService } from './../core/courses.service';
-import { CoursesObj } from './../coursesObj';
-import { TeachersObj } from './../teachersObj';
+
 import { TeachersService } from './../core/teachers.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -36,6 +37,7 @@ export class CourseDetailComponent implements OnInit {
     }
     else{
       this.coursesService.updateRecord(this.course);
+      this.router.navigateByUrl('/courses');
     }
   }
 

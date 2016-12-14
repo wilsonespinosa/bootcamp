@@ -1,6 +1,6 @@
 import { TeachersService } from './../core/teachers.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { TeachersObj } from './../teachersObj';
+import { TeachersObj } from './../core/teachersObj';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -33,6 +33,7 @@ export class TeacherDetailComponent implements OnInit {
     }
     else{
       this.teacherService.updateRecord(this.teacher);
+      this.router.navigateByUrl('/teachers');
     }
   }
 

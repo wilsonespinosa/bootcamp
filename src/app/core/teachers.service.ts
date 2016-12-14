@@ -1,4 +1,5 @@
-import { TeachersObj } from './../teachersObj';
+import { TeachersObj } from './teachersObj';
+
 import { MyActionsInterface } from './my-actions-interface';
 import { Injectable } from '@angular/core';
 

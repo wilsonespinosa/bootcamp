@@ -1,4 +1,5 @@
-import { TeachersObj } from './../teachersObj';
+import { TeachersObj } from './../core/teachersObj';
+
 import { TeachersService } from './../core/teachers.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';

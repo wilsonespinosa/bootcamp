@@ -1,5 +1,6 @@
+import { CoursesObj } from './../core/coursesObj';
 import { CoursesService } from './../core/courses.service';
-import { CoursesObj } from './../coursesObj';
+
 import { TeachersService } from './../core/teachers.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Attribute } from '@angular/core';
