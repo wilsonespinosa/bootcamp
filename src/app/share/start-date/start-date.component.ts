@@ -12,13 +12,6 @@ export class StartDateIconComponent {
 
   constructor() { }
 
-   ngDoCheck() {
-        if(this.date != this.previousDate) {
-            this.startDateHandler();
-            this.previousDate = this.date;
-        }
-    }
-
   startDateHandler(): string {
       let currentDate = new Date();
       let readDate = new Date(this.date); 
