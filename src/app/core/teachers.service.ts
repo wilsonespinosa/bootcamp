@@ -9,15 +9,6 @@ import { Http, Response, Headers } from '@angular/http'
 @Injectable()
 export class TeachersService implements MyActionsInterface{
 
-teachersObjList :TeachersObj[]=  [
-     new TeachersObj(1,"Horacio","Guerra"),
-     new TeachersObj(2,"Jairo","Rios"),
-     new TeachersObj(3,"Frank", "Ramirez"),
-     new TeachersObj(4,"Fernando", "Velasquez"),
-     new TeachersObj(5,"Anibal", "Arias"),
-     new TeachersObj(6,"Nohora", "Quitero"),
-     new TeachersObj(7,"Juaquin", "Alvarez"),
-   ]
    private teachersUrl = 'api/teachers';
     private headers = new Headers({ 'Content-Type': 'application/json' });
 
