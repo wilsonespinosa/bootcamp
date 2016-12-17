@@ -4,4 +4,5 @@ export interface MyActionsInterface {
     updateRecord(object:Object);
     deleteRecord(object:Object);
     getRecordById(id: string);
+    getNextRecordId();
 }
