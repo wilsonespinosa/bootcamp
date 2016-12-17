@@ -21,7 +21,7 @@ export class TeacherDetailComponent implements OnInit {
   ngOnInit() {
       this.route.params.forEach((params: Params) => this.teacherId = params["id"]);
     if(this.teacherId === "add"){
-      this.teacher = new TeachersObj(+this.teacherService.getNextRecordId());
+      this.teacher = new TeachersObj(null);
     }else{
     this.teacherService.getRecordById(this.teacherId).subscribe(teacher => {this.teacher = teacher});
 

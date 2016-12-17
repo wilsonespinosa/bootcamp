@@ -24,7 +24,7 @@ export class CourseDetailComponent implements OnInit {
       this.teachers = this.teacherService.listRecord();
       this.route.params.forEach((params: Params) => this.courseId = params["id"]);
     if(this.courseId === "add"){
-       this.course = new CoursesObj(+this.coursesService.getNextRecordId());
+       this.course = new CoursesObj(null);
     }else{
       this.coursesService.getRecordById(this.courseId).subscribe(course => {this.course = course});
     }
