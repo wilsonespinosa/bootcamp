@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="course">
     <h1>{{course.name}}</h1>
     <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
         <div class="form-group">
@@ -29,7 +29,7 @@
             <label for="teacher">Taught by</label>
             <div class="dropdown">
                 <select class="form-control" id="teacher" name="teacher" [(ngModel)]="course.teacher" required #teacher="ngModel">
-                    <option  *ngFor="let teacher of teachers" value="{{teacher.id}}">{{teacher.name}}</option>
+                    <option  *ngFor="let teacher of teachers | async" value="{{teacher.id}}">{{teacher.name}}</option>
                 </select>
             </div>
         </div>

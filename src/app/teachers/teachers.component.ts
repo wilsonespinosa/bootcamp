@@ -1,5 +1,5 @@
 import { TeachersObj } from './../core/teachersObj';
-
+import { Observable } from 'rxjs/Rx';
 import { TeachersService } from './../core/teachers.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -13,7 +13,8 @@ export class TeachersComponent implements OnInit {
 activeHome:string="";
 activeTeacher:string="active";
 activeCourse:string="";
-teachers: TeachersObj[];
+
+teachers: Observable<TeachersObj[]>;
   constructor( private route: ActivatedRoute, private teacherService : TeachersService) { }
 
 
@@ -23,7 +24,7 @@ teachers: TeachersObj[];
   }
  
   deleteRecord(id: string){
-     this.teacherService.deleteRecord(id);
+     this.teacherService.deleteRecord(id).subscribe(ok => this.teachers = this.teacherService.listRecord());
   }
 
 }

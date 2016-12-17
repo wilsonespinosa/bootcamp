@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { CoursesObj } from './../core/coursesObj';
 import { CoursesService } from './../core/courses.service';
 
@@ -13,11 +14,12 @@ import { Component, OnInit, Attribute } from '@angular/core';
 export class CoursesComponent implements OnInit {
  private fecha;
 
+ courses: Observable<CoursesObj[]>;
 activeHome:string="";
 activeTeacher:string="";
 activeCourse:string="active";
 
-courses : CoursesObj[];
+_courses : CoursesObj[];
   constructor(@Attribute("format") format,private route: ActivatedRoute, private coursesService : CoursesService) {
     
    }
@@ -28,7 +30,7 @@ courses : CoursesObj[];
   }
   
   deleteRecord(id: string){
-     this.coursesService.deleteRecord(id);
+     this.coursesService.deleteRecord(id).subscribe(ok => this.courses = this.coursesService.listRecord());
   }
 
 }

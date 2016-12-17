@@ -4,39 +4,50 @@ import { TeachersService } from './teachers.service';
 import { MyActionsInterface } from './my-actions-interface';
 import { Injectable } from '@angular/core';
 
+import { Observable, Operator } from 'rxjs/Rx';
+import 'rxjs/add/operator/map'
+import { Http, Response, Headers } from '@angular/http'
+
 @Injectable()
 export class CoursesService implements MyActionsInterface{
+    private coursesUrl = 'api/courses';
+    private headers = new Headers({ 'Content-Type': 'application/json' });
 
- constructor(private teachersService: TeachersService) { }
-coursesObjList :CoursesObj[]=  [
-     new CoursesObj(1,"Angular2","32","2017-01-01", "1"),
-     new CoursesObj(2,"Ionic","20","2016-12-01", "2"),
-     new CoursesObj(3,"Test Automation","30","2016-05-15", "3"),
-     new CoursesObj(4,"Machine Learning","45","2017-05-01", "4"),
-     new CoursesObj(5,"Test Automation","30","2016-05-15", "5"),
-     new CoursesObj(6,"Machine Learning","45","2017-05-01", "6")
-   ] 
-    createRecord(coursesObj: CoursesObj){
-      this.coursesObjList.push(coursesObj);
-    }
-    listRecord():CoursesObj[]{
-      return this.coursesObjList;
-    }
-    updateRecord(coursesObj: CoursesObj){
-      this.getRecordById(""+coursesObj.id).name = coursesObj.name;
-      this.getRecordById(""+coursesObj.id).hours = coursesObj.hours;
-      this.getRecordById(""+coursesObj.id).startDate = coursesObj.startDate;
-      this.getRecordById(""+coursesObj.id).teacher = coursesObj.teacher;
-    }
-    deleteRecord(id: string){
-      var index = this.coursesObjList.indexOf(this.coursesObjList.find(value => value.id === +id));
-      this.coursesObjList.splice(index, 1);
-    }
-    getRecordById(id: string):CoursesObj{
-      return this.coursesObjList.find(value => value.id === +id);
-   }
+ constructor(private http: Http, private teachersService: TeachersService) { }
 
-  getNextRecordId():string{
-    return (this.coursesObjList.length + 1).toString();
-  }
+    createRecord(coursesObj: CoursesObj): Observable<CoursesObj> {
+        return this.http
+            .post(this.coursesUrl, JSON.stringify(coursesObj), { headers: this.headers })
+            .map(res => res.json().data as CoursesObj)
+    }
+
+
+    listRecord(): Observable<CoursesObj[]> {
+        return this.http.get(this.coursesUrl)
+            .map((r: Response) => r.json().data as CoursesObj[])
+    }
+
+
+     updateRecord(coursesObj: CoursesObj): Observable<CoursesObj> {
+        const url = `${this.coursesUrl}/${coursesObj.id}`;
+        return this.http
+            .put(url, JSON.stringify(coursesObj), { headers: this.headers })
+            .map(() => coursesObj)
+    }
+
+    deleteRecord(id: string): Observable<boolean> {
+        const url = `${this.coursesUrl}/${id}`;
+        return this.http.delete(url, { headers: this.headers })
+            .map((r: Response) => r.ok)
+    }
+
+    getRecordById(id: string): Observable<CoursesObj> {
+        const url = `${this.coursesUrl}/${id}`;
+        return this.http.get(url)
+            .map((r: Response) => {return r.json().data as CoursesObj})
+    }
+
+    getNextRecordId(){
+      
+    }
 }

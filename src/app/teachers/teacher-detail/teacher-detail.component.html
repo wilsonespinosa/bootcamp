@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="teacher">
     <h1>{{teacher.name}}</h1>
     <form (ngSubmit)="onSubmit()" #teacherForm="ngForm">
         <div class="form-group">

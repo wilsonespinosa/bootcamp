@@ -1,7 +1,10 @@
-import { TeachersService } from './../core/teachers.service';
+import { TeachersService } from './../../core/teachers.service';
+import { TeachersObj } from './../../core/teachersObj';
+
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { TeachersObj } from './../core/teachersObj';
+
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-teacher-detail',
@@ -12,7 +15,7 @@ export class TeacherDetailComponent implements OnInit {
 
   teacherId: string;
   teacher: TeachersObj;
-  
+   teachers: Observable<TeachersObj[]>;
   constructor( private route: ActivatedRoute, private router: Router, private teacherService : TeachersService) { }  
 
   ngOnInit() {
@@ -20,7 +23,8 @@ export class TeacherDetailComponent implements OnInit {
     if(this.teacherId === "add"){
       this.teacher = new TeachersObj(+this.teacherService.getNextRecordId());
     }else{
-      this.teacher = this.teacherService.getRecordById(this.teacherId);
+    this.teacherService.getRecordById(this.teacherId).subscribe(teacher => {this.teacher = teacher});
+
     }
   }
 
@@ -28,12 +32,10 @@ export class TeacherDetailComponent implements OnInit {
 
   onSubmit() {
     if(this.teacherId === "add"){
-      this.teacherService.createRecord(this.teacher);
-      this.router.navigateByUrl('/teachers');
+      this.teacherService.createRecord(this.teacher).subscribe(courso => this.router.navigateByUrl('/teachers') );
     }
     else{
-      this.teacherService.updateRecord(this.teacher);
-      this.router.navigateByUrl('/teachers');
+      this.teacherService.updateRecord(this.teacher).subscribe(courso => this.router.navigateByUrl('/teachers') );
     }
   }
 

@@ -2,6 +2,9 @@ import { TeachersObj } from './teachersObj';
 
 import { MyActionsInterface } from './my-actions-interface';
 import { Injectable } from '@angular/core';
+import { Observable, Operator } from 'rxjs/Rx';
+import 'rxjs/add/operator/map'
+import { Http, Response, Headers } from '@angular/http'
 
 @Injectable()
 export class TeachersService implements MyActionsInterface{
@@ -15,26 +18,44 @@ teachersObjList :TeachersObj[]=  [
      new TeachersObj(6,"Nohora", "Quitero"),
      new TeachersObj(7,"Juaquin", "Alvarez"),
    ]
-  constructor() { }
-    createRecord(teachersObj: TeachersObj){
-      this.teachersObjList.push(teachersObj);
-    }
-    listRecord():TeachersObj[]{
-      return this.teachersObjList;
-    }
-    updateRecord(teachersObj: TeachersObj){
-      this.getRecordById(""+teachersObj.id).name = teachersObj.name;
-      this.getRecordById(""+teachersObj.id).lastName = teachersObj.lastName;
-    }
-    deleteRecord(id: string){
-      var index = this.teachersObjList.indexOf(this.teachersObjList.find(value => value.id === +id));
-      this.teachersObjList.splice(index, 1);
-    }
-    getRecordById(id: string):TeachersObj{
-      return this.teachersObjList.find(value => value.id === +id);
-   }
+   private teachersUrl = 'api/teachers';
+    private headers = new Headers({ 'Content-Type': 'application/json' });
 
-  getNextRecordId():string{
-    return (this.teachersObjList.length + 1).toString();
+ constructor(private http: Http) { }
+
+
+    createRecord(teachersObj: TeachersObj): Observable<TeachersObj> {
+        return this.http
+            .post(this.teachersUrl, JSON.stringify(teachersObj), { headers: this.headers })
+            .map(res => res.json().data as TeachersObj)
+    }
+
+
+    listRecord(): Observable<TeachersObj[]> {
+        return this.http.get(this.teachersUrl)
+            .map((r: Response) => r.json().data as TeachersObj[])
+    }
+
+     updateRecord(teachersObj: TeachersObj): Observable<TeachersObj> {
+        const url = `${this.teachersUrl}/${teachersObj.id}`;
+        return this.http
+            .put(url, JSON.stringify(teachersObj), { headers: this.headers })
+            .map(() => teachersObj)
+    }
+
+
+        deleteRecord(id: string): Observable<boolean> {
+        const url = `${this.teachersUrl}/${id}`;
+        return this.http.delete(url, { headers: this.headers })
+            .map((r: Response) => r.ok)
+    }
+
+    getRecordById(id: string): Observable<TeachersObj> {
+        const url = `${this.teachersUrl}/${id}`;
+        return this.http.get(url)
+            .map((r: Response) => {return r.json().data  as TeachersObj})
+    }
+  getNextRecordId(){
+   
   }
 }

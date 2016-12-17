@@ -1,3 +1,6 @@
+import { TeacherDetailComponent } from './teachers/teacher-detail/teacher-detail.component';
+
+import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { StartDateIconComponent } from './share/start-date/start-date.component';
 import { TeachersService } from './core/teachers.service';
 import { CoursesService } from './core/courses.service';
@@ -13,10 +16,11 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { RouterModule} from '@angular/router';
 import { NavTabComponent } from './share/nav-tab/nav-tab.component';
-import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { TeacherDetailComponent } from './teacher-detail/teacher-detail.component';
+
 import {DataTableModule} from "angular2-datatable";
 
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './core/fake-API.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,7 @@ import {DataTableModule} from "angular2-datatable";
     FormsModule,
     HttpModule,
     DataTableModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
     RouterModule.forRoot([
     {
         path: 'teachers/:id',
